@@ -13,6 +13,7 @@ int main(int argc, char** argv)
 
 	RectangleOperations* ro = new RectangleOperations();
 	vector<Rectangle> rectangles;
+    
     int** iIntersectionMatrix;
     vector<int> rectangleMap;
     vector<int> vTemp;
@@ -22,8 +23,8 @@ int main(int argc, char** argv)
     std::string errorMessage;
     if(!getData(rectangles, argv[1],errorMessage))
     {
-    	std::cout<<errorMessage<<std::endl;
-    	return 0;
+        std::cout<<errorMessage<<std::endl;
+        return 0;
     }
 
     //Making rectangle mapping
@@ -46,7 +47,7 @@ int main(int argc, char** argv)
 
     //Getting 2+ Way Intersections
     ro->printTwoPlusWayIntersections(allCombinations,rectangles);
-	
-	delete ro;
+    
+    delete ro;
     return 0;
 }

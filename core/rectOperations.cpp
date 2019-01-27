@@ -1,17 +1,17 @@
 #include "rectOperations.h"
 
-bool RectangleOperations::valueInRange(int value, int min, int max)
+bool RectangleOperations::valueInRange(double value, double min, double max)
 {
-    return (value >= min) && (value <= max);
+    return ((value-max)*(value-min) <= 0); 
 }
-
+ 
 bool RectangleOperations::rectOverlap(Rectangle& A, Rectangle& B)
 {
-    bool xOverlap = valueInRange(A.getTLX(), B.getTLX(), B.getTLX() + B.getW()) ||
-                    valueInRange(B.getTLX(), A.getTLX(), A.getTLX() + A.getW());
+    bool xOverlap = valueInRange(A.getTLX(), B.getTLX(), fabs(B.getTLX() + B.getW())) ||
+                    valueInRange(B.getTLX(), A.getTLX(), fabs(A.getTLX() + A.getW()));
 
-    bool yOverlap = valueInRange(A.getTLY(), B.getTLY(), B.getTLY() + B.getH()) ||
-                    valueInRange(B.getTLY(), A.getTLY(), A.getTLY() + A.getH());
+    bool yOverlap = valueInRange(A.getTLY(), B.getTLY(), fabs(B.getTLY() + B.getH())) ||
+                    valueInRange(B.getTLY(), A.getTLY(), fabs(A.getTLY() + A.getH()));
 
     return xOverlap && yOverlap;
 }
@@ -61,12 +61,12 @@ void RectangleOperations::getAllCombinations(int offset, int k, std::vector<int>
 void RectangleOperations::getIntersectingRectangle(Rectangle& rectOne, Rectangle& rectTwo, Rectangle& resultingRectangle)
 {
     resultingRectangle.setTLX(std::max(rectOne.getTLX(), rectTwo.getTLX()));
-    resultingRectangle.setTLY(std::max(rectOne.getTLY(), rectTwo.getTLY()));
+    resultingRectangle.setTLY(std::min(rectOne.getTLY(), rectTwo.getTLY()));
     resultingRectangle.setBRX(std::min(rectOne.getBRX(), rectTwo.getBRX()));
-    resultingRectangle.setBRY(std::min(rectOne.getBRY(), rectTwo.getBRY()));
+    resultingRectangle.setBRY(std::max(rectOne.getBRY(), rectTwo.getBRY()));
 
-    resultingRectangle.setW(abs(resultingRectangle.getBRX()- resultingRectangle.getTLX()));
-    resultingRectangle.setH(abs(resultingRectangle.getBRY()- resultingRectangle.getTLY()));
+    resultingRectangle.setW(fabs(resultingRectangle.getBRX()- resultingRectangle.getTLX()));
+    resultingRectangle.setH(fabs(resultingRectangle.getBRY()- resultingRectangle.getTLY()));
 }
 void RectangleOperations::printTwoPlusWayIntersections(std::vector< std::vector<int>>& groups, std::vector<Rectangle>& rectangles)
 {

@@ -17,7 +17,22 @@ private:
 
 public:
     Rectangle() {}
-    Rectangle(double x, double y, double w, double h):TLX(x), TLY(y), width(w), height(h), BRX(x+w), BRY(y+h) {}
+    Rectangle(double x, double y, double w, double h):TLX(x), TLY(y), width(w), height(h) 
+    {
+        BRX = x+w;
+        if(y > 0){
+            BRY = y - h;
+        }
+        else{
+            if(x <= 0){
+                BRY = y - h;
+            }
+            else{
+                BRY = y + h;
+            }
+            
+        }
+    }
 
     //Getters
     inline double getTLX()

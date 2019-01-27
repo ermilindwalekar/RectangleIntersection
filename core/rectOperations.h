@@ -19,7 +19,7 @@ public:
     void printTwoWayIntersections(int** a, int dim,std::vector<Rectangle>& rectangles);
 
 private:
-    bool valueInRange(int, int, int);
+    bool valueInRange(double, double, double);
 };
 
 #endif

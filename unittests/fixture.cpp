@@ -33,6 +33,41 @@ TEST_F(FunctionalFixture, DISABLED_combinationsCheck)
     }
 }
 
+TEST_F(FunctionalFixture, overlapCheck)
+{
+    Rectangle rectOne(2,3,5,4);
+    Rectangle rectTwo(3,4,6,10);
+
+    EXPECT_TRUE(ro->rectOverlap(rectOne, rectTwo));
+}
+
+TEST_F(FunctionalFixture, overlapQuad3Check)
+{
+    Rectangle rectOne(-1,0,1,1);
+    Rectangle rectTwo(0,0,2,2);
+
+    EXPECT_TRUE(ro->rectOverlap(rectOne, rectTwo));
+}
+
+TEST_F(FunctionalFixture, overlapFalseCheck)
+{
+    Rectangle rectOne(-1,-1,1,1);
+    Rectangle rectTwo(10,12,6,10);
+
+    EXPECT_FALSE(ro->rectOverlap(rectOne, rectTwo));
+}
+
+TEST_F(FunctionalFixture, intersectionCheck)
+{
+    Rectangle rectOne(-1,-1,1,1);
+    Rectangle rectTwo(-0.5,-0.5,1,1);
+    Rectangle intersectingRect;
+
+    ro->getIntersectingRectangle(rectOne, rectTwo, intersectingRect);
+    std::cout << " at ("<<intersectingRect.getTLX()<<","<<intersectingRect.getTLY()<<"), w = "<< intersectingRect.getW()
+                 << ", h = "<< intersectingRect.getH()<< std::endl;
+}
+
 TEST_F(FunctionalFixture, getSolution)
 {
     //Get Data from rectangle
