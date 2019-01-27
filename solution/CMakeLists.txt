@@ -14,5 +14,4 @@ if(UNIX AND NOT APPLE)
     set(LIBS ${CMAKE_SOURCE_DIR}/core/libcore.a)
 endif()
 
-set(LIBS ${CMAKE_SOURCE_DIR}/core/libcore.a)
 target_link_libraries(solution ${LIBS})
