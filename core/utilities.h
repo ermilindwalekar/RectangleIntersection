@@ -35,10 +35,10 @@ bool getData(std::vector<Rectangle>& rectangles, string fileName, string& errorM
         for( Json::Value::const_iterator inner = (*outer).begin() ; inner!= (*outer).end() ; inner++ )
         {
             rectangles.push_back(
-                Rectangle((*inner)["x"].asDouble(),
-                          (*inner)["y"].asDouble(),
-                          (*inner)["w"].asDouble(),
-                          (*inner)["h"].asDouble()
+                Rectangle((*inner)["x"].asInt(),
+                          (*inner)["y"].asInt(),
+                          (*inner)["w"].asInt(),
+                          (*inner)["h"].asInt()
                          ));
         }
     }
@@ -51,7 +51,8 @@ void printInputRectangles(vector<Rectangle> & rectangles)
     for(int iLoop = 0; iLoop < (int)rectangles.size(); iLoop++)
     {
         cout<<iLoop+1<<": Rectangle at ("<<rectangles[iLoop].getTLX()<<","
-            <<rectangles[iLoop].getTLY()<<"), w = "<<rectangles[iLoop].getW()<<", h = "<<rectangles[iLoop].getH()<<endl;
+            <<rectangles[iLoop].getTLY()<<"),("<<rectangles[iLoop].getBRX()<<","
+            <<rectangles[iLoop].getBRY()<<"),w = "<<rectangles[iLoop].getW()<<", h = "<<rectangles[iLoop].getH()<<endl;
     }
     cout<<endl;
 }

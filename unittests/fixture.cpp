@@ -4,14 +4,22 @@ char* FILENAME;
 
 TEST_F(FunctionalFixture, validLoadData)
 {
-    //Get Data from rectangle
+    //Get Data from json
     EXPECT_TRUE(getData(rectangles, FILENAME, errorMessage));
 }
 
 TEST_F(FunctionalFixture, DISABLED_invalidLoadData)
 {
-    //Get Data from rectangle
+    //Get Data from json
     EXPECT_FALSE(getData(rectangles, FILENAME, errorMessage));
+    std::cout<<errorMessage<<std::endl;
+}
+
+TEST_F(FunctionalFixture, DISABLED_invalidJson)
+{
+    //Get Data from json
+    getData(rectangles, FILENAME, errorMessage);
+    EXPECT_GT(errorMessage.length(), 0);
     std::cout<<errorMessage<<std::endl;
 }
 
@@ -33,42 +41,88 @@ TEST_F(FunctionalFixture, DISABLED_combinationsCheck)
     }
 }
 
-TEST_F(FunctionalFixture, overlapCheck)
+TEST_F(FunctionalFixture, overlapFasleCheck)
 {
-    Rectangle rectOne(2,3,5,4);
-    Rectangle rectTwo(3,4,6,10);
+    Rectangle rectOne(100,100,250,80);
+    Rectangle rectTwo(120,200,250,150);
+
+    EXPECT_FALSE(ro->rectOverlap(rectOne, rectTwo));
+}
+
+TEST_F(FunctionalFixture, overlapQuad1Check)
+{
+    Rectangle rectOne(2,2,1,5);
+    Rectangle rectTwo(1,-1,3,3);
+
+    EXPECT_TRUE(ro->rectOverlap(rectOne, rectTwo));
+}
+
+TEST_F(FunctionalFixture, overlapQuad2Check)
+{
+    Rectangle rectOne(-1,1,1,1);
+    Rectangle rectTwo(-2,2,2,2);
 
     EXPECT_TRUE(ro->rectOverlap(rectOne, rectTwo));
 }
 
 TEST_F(FunctionalFixture, overlapQuad3Check)
 {
-    Rectangle rectOne(-1,0,1,1);
-    Rectangle rectTwo(0,0,2,2);
+    Rectangle rectOne(-1,-1,1,1);
+    Rectangle rectTwo(-2,-2,2,2);
 
     EXPECT_TRUE(ro->rectOverlap(rectOne, rectTwo));
 }
 
-TEST_F(FunctionalFixture, overlapFalseCheck)
+TEST_F(FunctionalFixture, overlapQuad4Check)
 {
-    Rectangle rectOne(-1,-1,1,1);
-    Rectangle rectTwo(10,12,6,10);
+    Rectangle rectOne(2,-2,2,2);
+    Rectangle rectTwo(1,-1,2,2);
+
+    EXPECT_TRUE(ro->rectOverlap(rectOne, rectTwo));
+}
+
+TEST_F(FunctionalFixture, overlapFalseQuad1Check)
+{
+    Rectangle rectOne(1,1,1,1);
+    Rectangle rectTwo(10,10,1,1);
 
     EXPECT_FALSE(ro->rectOverlap(rectOne, rectTwo));
 }
 
-TEST_F(FunctionalFixture, intersectionCheck)
+TEST_F(FunctionalFixture, overlapFalseQuad2Check)
+{
+    Rectangle rectOne(-10,10,1,1);
+    Rectangle rectTwo(-1,1,1,1);
+
+    EXPECT_FALSE(ro->rectOverlap(rectOne, rectTwo));
+}
+
+TEST_F(FunctionalFixture, overlapFalseQuad3Check)
+{
+    Rectangle rectOne(-1,-1,1,1);
+    Rectangle rectTwo(-10,-10,1,1);
+
+    EXPECT_FALSE(ro->rectOverlap(rectOne, rectTwo));
+}
+
+TEST_F(FunctionalFixture, overlapFalseQuad4Check)
+{
+    Rectangle rectOne(1,-1,1,1);
+    Rectangle rectTwo(10,-10,1,11);
+
+    EXPECT_FALSE(ro->rectOverlap(rectOne, rectTwo));
+}
+
+TEST_F(FunctionalFixture, trueIntersectionCheck)
 {
     Rectangle rectOne(-1,-1,1,1);
     Rectangle rectTwo(-0.5,-0.5,1,1);
     Rectangle intersectingRect;
 
-    ro->getIntersectingRectangle(rectOne, rectTwo, intersectingRect);
-    std::cout << " at ("<<intersectingRect.getTLX()<<","<<intersectingRect.getTLY()<<"), w = "<< intersectingRect.getW()
-                 << ", h = "<< intersectingRect.getH()<< std::endl;
+    EXPECT_TRUE(ro->getIntersectingRectangle(rectOne, rectTwo, intersectingRect));
 }
 
-TEST_F(FunctionalFixture, getSolution)
+TEST_F(FunctionalFixture, DISABLED_getSolution)
 {
     //Get Data from rectangle
     ASSERT_TRUE(getData(rectangles, FILENAME, errorMessage));

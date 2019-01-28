@@ -2,86 +2,76 @@
 #define RECTANGLE_H_INCLUDED
 
 #include <vector>
-
+#include <iostream>
 class Rectangle
 {
 private:
 
-    double TLX;
-    double TLY;
-    double width;
-    double height;
+    int TLX;
+    int TLY;
+    int width;
+    int height;
 
-    double BRX;
-    double BRY;
+    
+    int BRX;
+    int BRY;
 
 public:
     Rectangle() {}
-    Rectangle(double x, double y, double w, double h):TLX(x), TLY(y), width(w), height(h) 
+    Rectangle(int x, int y, int w, int h):TLX(x), TLY(y), width(w), height(h) 
     {
-        BRX = x+w;
-        if(y > 0){
-            BRY = y - h;
-        }
-        else{
-            if(x <= 0){
-                BRY = y - h;
-            }
-            else{
-                BRY = y + h;
-            }
-            
-        }
+        BRX = x + w;
+        BRY = y + h;
     }
 
     //Getters
-    inline double getTLX()
+    inline int getTLX()
     {
         return TLX;
     }
-    inline double getTLY()
+    inline int getTLY()
     {
         return TLY;
     }
-    inline double getBRX()
+    inline int getBRX()
     {
         return BRX;
     }
-    inline double getBRY()
+    inline int getBRY()
     {
         return BRY;
     }
-    inline double getW()
+    inline int getW()
     {
         return width;
     }
-    inline double getH()
+    inline int getH()
     {
         return height;
     }
 
     //Setters
-    inline void setTLX(double tlx)
+    inline void setTLX(int tlx)
     {
         TLX = tlx;
     }
-    inline void setTLY(double tly)
+    inline void setTLY(int tly)
     {
         TLY = tly;
     }
-    inline void setBRX(double brx)
+    inline void setBRX(int brx)
     {
         BRX = brx;
     }
-    inline void setBRY(double bry)
+    inline void setBRY(int bry)
     {
         BRY = bry;
     }
-    inline void setW(double W)
+    inline void setW(int W)
     {
         width = W;
     }
-    inline void setH(double H)
+    inline void setH(int H)
     {
         height = H;
     }

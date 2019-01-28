@@ -1,17 +1,17 @@
 #include "rectOperations.h"
 
-bool RectangleOperations::valueInRange(double value, double min, double max)
+bool RectangleOperations::valueInRange(int value, int min, int max)
 {
-    return ((value-max)*(value-min) <= 0); 
+    return (value >= min) && (value <= max);
 }
- 
+
 bool RectangleOperations::rectOverlap(Rectangle& A, Rectangle& B)
 {
-    bool xOverlap = valueInRange(A.getTLX(), B.getTLX(), fabs(B.getTLX() + B.getW())) ||
-                    valueInRange(B.getTLX(), A.getTLX(), fabs(A.getTLX() + A.getW()));
+    bool xOverlap = valueInRange(A.getTLX(), B.getTLX(), B.getTLX() + B.getW()) ||
+                    valueInRange(B.getTLX(), A.getTLX(), A.getTLX() + A.getW());
 
-    bool yOverlap = valueInRange(A.getTLY(), B.getTLY(), fabs(B.getTLY() + B.getH())) ||
-                    valueInRange(B.getTLY(), A.getTLY(), fabs(A.getTLY() + A.getH()));
+    bool yOverlap = valueInRange(A.getTLY(), B.getTLY(), B.getTLY() + B.getH()) ||
+                    valueInRange(B.getTLY(), A.getTLY(), A.getTLY() + A.getH());
 
     return xOverlap && yOverlap;
 }
@@ -42,6 +42,7 @@ int** RectangleOperations::generateIntersectionMatrix(std::vector<Rectangle>& re
     }
     return iIntersectionMatrix;
 }
+
 void RectangleOperations::getAllCombinations(int offset, int k, std::vector<int>& rectangles,
         std::vector<int>& combination, std::vector<std::vector<int>>& myCombinations)
 {
@@ -58,15 +59,16 @@ void RectangleOperations::getAllCombinations(int offset, int k, std::vector<int>
         combination.pop_back();
     }
 }
-void RectangleOperations::getIntersectingRectangle(Rectangle& rectOne, Rectangle& rectTwo, Rectangle& resultingRectangle)
+bool RectangleOperations::getIntersectingRectangle(Rectangle& rectOne, Rectangle& rectTwo, Rectangle& resultingRectangle)
 {
     resultingRectangle.setTLX(std::max(rectOne.getTLX(), rectTwo.getTLX()));
-    resultingRectangle.setTLY(std::min(rectOne.getTLY(), rectTwo.getTLY()));
+    resultingRectangle.setTLY(std::max(rectOne.getTLY(), rectTwo.getTLY()));
     resultingRectangle.setBRX(std::min(rectOne.getBRX(), rectTwo.getBRX()));
-    resultingRectangle.setBRY(std::max(rectOne.getBRY(), rectTwo.getBRY()));
+    resultingRectangle.setBRY(std::min(rectOne.getBRY(), rectTwo.getBRY()));
 
-    resultingRectangle.setW(fabs(resultingRectangle.getBRX()- resultingRectangle.getTLX()));
-    resultingRectangle.setH(fabs(resultingRectangle.getBRY()- resultingRectangle.getTLY()));
+    resultingRectangle.setW(abs(resultingRectangle.getBRX()- resultingRectangle.getTLX()));
+    resultingRectangle.setH(abs(resultingRectangle.getBRY()- resultingRectangle.getTLY()));
+    return true;
 }
 void RectangleOperations::printTwoPlusWayIntersections(std::vector< std::vector<int>>& groups, std::vector<Rectangle>& rectangles)
 {
@@ -104,25 +106,12 @@ void RectangleOperations::printTwoPlusWayIntersections(std::vector< std::vector<
         {
             intersectingRect = intersectionStack.top();
             intersectionStack.pop();
-            const auto& aLast = group.end()[-1];
-            const auto& aSlast = group.end()[-2];
-            std::cout<<"Between Rectangles ";
+            std::cout<<"Between Rectangles { ";
             for( auto rectangle : group )
             {
-                if(aLast == rectangle)
-                {
-                    std::cout <<" and "<<rectangle;
-                }
-                else if(aSlast == rectangle)
-                {
-                    std::cout<<rectangle;
-                }
-                else
-                {
-                    std::cout<<rectangle <<", ";
-                }
+                std::cout << rectangle << " ";
             }
-            std::cout << " at ("<<intersectingRect.getTLX()<<","<<intersectingRect.getTLY()<<"), w = "<< intersectingRect.getW()
+            std::cout << "} at ("<<intersectingRect.getTLX()<<","<<intersectingRect.getTLY()<<"), w = "<< intersectingRect.getW()
                  << ", h = "<< intersectingRect.getH()<< std::endl;
         }
     }
