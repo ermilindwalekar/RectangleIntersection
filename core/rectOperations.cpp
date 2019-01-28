@@ -59,7 +59,7 @@ void RectangleOperations::getAllCombinations(int offset, int k, std::vector<int>
         combination.pop_back();
     }
 }
-bool RectangleOperations::getIntersectingRectangle(Rectangle& rectOne, Rectangle& rectTwo, Rectangle& resultingRectangle)
+void RectangleOperations::getIntersectingRectangle(Rectangle& rectOne, Rectangle& rectTwo, Rectangle& resultingRectangle)
 {
     resultingRectangle.setTLX(std::max(rectOne.getTLX(), rectTwo.getTLX()));
     resultingRectangle.setTLY(std::max(rectOne.getTLY(), rectTwo.getTLY()));
@@ -68,7 +68,6 @@ bool RectangleOperations::getIntersectingRectangle(Rectangle& rectOne, Rectangle
 
     resultingRectangle.setW(abs(resultingRectangle.getBRX()- resultingRectangle.getTLX()));
     resultingRectangle.setH(abs(resultingRectangle.getBRY()- resultingRectangle.getTLY()));
-    return true;
 }
 void RectangleOperations::printTwoPlusWayIntersections(std::vector< std::vector<int>>& groups, std::vector<Rectangle>& rectangles)
 {
@@ -106,12 +105,25 @@ void RectangleOperations::printTwoPlusWayIntersections(std::vector< std::vector<
         {
             intersectingRect = intersectionStack.top();
             intersectionStack.pop();
-            std::cout<<"Between Rectangles { ";
+            const auto& aLast = group.end()[-1];
+            const auto& aSlast = group.end()[-2];
+            std::cout<<"Between Rectangles ";
             for( auto rectangle : group )
             {
-                std::cout << rectangle << " ";
+                if(aLast == rectangle)
+                {
+                    std::cout <<" and "<<rectangle;
+                }
+                else if(aSlast == rectangle)
+                {
+                    std::cout<<rectangle;
+                }
+                else
+                {
+                    std::cout<<rectangle <<", ";
+                }
             }
-            std::cout << "} at ("<<intersectingRect.getTLX()<<","<<intersectingRect.getTLY()<<"), w = "<< intersectingRect.getW()
+            std::cout << " at ("<<intersectingRect.getTLX()<<","<<intersectingRect.getTLY()<<"), w = "<< intersectingRect.getW()
                  << ", h = "<< intersectingRect.getH()<< std::endl;
         }
     }

@@ -13,7 +13,7 @@ public:
     RectangleOperations() {}
     bool rectOverlap(Rectangle&, Rectangle&);
     int** generateIntersectionMatrix(std::vector <Rectangle>&);
-    bool getIntersectingRectangle(Rectangle& rectOne, Rectangle& rectTwo, Rectangle& resultingRectangle);
+    void getIntersectingRectangle(Rectangle& rectOne, Rectangle& rectTwo, Rectangle& resultingRectangle);
     void getAllCombinations(int, int, std::vector<int>&,std::vector<int>&, std::vector<std::vector<int> >&);
     void printTwoPlusWayIntersections(std::vector< std::vector<int> >& groups, std::vector<Rectangle>& rectangles);
     void printTwoWayIntersections(int** a, int dim,std::vector<Rectangle>& rectangles);

@@ -119,7 +119,7 @@ TEST_F(FunctionalFixture, trueIntersectionCheck)
     Rectangle rectTwo(-0.5,-0.5,1,1);
     Rectangle intersectingRect;
 
-    EXPECT_TRUE(ro->getIntersectingRectangle(rectOne, rectTwo, intersectingRect));
+    ro->getIntersectingRectangle(rectOne, rectTwo, intersectingRect);
 }
 
 TEST_F(FunctionalFixture, DISABLED_getSolution)
